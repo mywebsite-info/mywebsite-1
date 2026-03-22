@@ -579,3 +579,40 @@ function triggerConfetti() {
     setTimeout(() => piece.remove(), duration * 1000 + 100);
   }
 }
+
+/* ────────────────────────────────────────────────────────────
+   12. HERO MOCKUP TILT EFFECT
+   ───────────────────────────────────────────────────────────── */
+(function initMockupTilt() {
+  const mockup = document.getElementById('heroMockup');
+  if (!mockup) return;
+
+  const wrapper = mockup.parentElement;
+  const maxRotation = 26; // Increased rotation for visible impact
+
+  function handleMove(e) {
+    const rect = mockup.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // Percentage from center (-0.5 to 0.5)
+    const px = (x / rect.width) - 0.5;
+    const py = (y / rect.height) - 0.5;
+    
+    // Calculate rotation: 
+    const rotateY = px * maxRotation; 
+    const rotateX = -py * maxRotation; // Invert X for natural tilt
+    
+    mockup.style.setProperty('--tilt-x', `${rotateX}deg`);
+    mockup.style.setProperty('--tilt-y', `${rotateY}deg`);
+  }
+
+  function handleReset() {
+    mockup.style.setProperty('--tilt-x', '0deg');
+    mockup.style.setProperty('--tilt-y', '0deg');
+  }
+
+  // Use wrapper for wider hit area if needed, but mockup itself is fine
+  wrapper.addEventListener('mousemove', handleMove);
+  wrapper.addEventListener('mouseleave', handleReset);
+})();
