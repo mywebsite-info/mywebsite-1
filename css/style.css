@@ -1427,15 +1427,16 @@ textarea.form-control {
 
 .footer-inner {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-  padding: 24px 40px;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+  padding: 40px;
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
-  border-radius: 60px;
+  border-radius: 40px;
   border: 1px solid var(--glass-border);
   box-shadow: var(--shadow), var(--glass-glow);
 }
@@ -1467,7 +1468,130 @@ textarea.form-control {
 .footer-email:hover { color: var(--primary-light); }
 
 /* ============================================================
-   SCROLL REVEAL
+   WORK GALLERY (Marquee)
+   ============================================================ */
+.gallery-container {
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  overflow: hidden;
+  padding: 40px 0;
+}
+
+.gallery-marquee {
+  display: flex;
+  gap: 36px;
+  width: max-content;
+  animation: marquee 50s linear infinite;
+  padding: 20px;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.gallery-card {
+  width: 620px;
+  height: 380px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--shadow), var(--glass-glow);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  border-color: var(--primary-light);
+  box-shadow: 0 20px 60px rgba(124,77,255,0.25);
+}
+
+.gallery-card-img {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(124,77,255,0.1), rgba(181,132,255,0.05));
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Chrome-like bar at top of card */
+.gallery-card-img::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 24px;
+  background: rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  z-index: 2;
+}
+
+.gallery-card-img::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
+  filter: saturate(0.8) contrast(1.1);
+  transition: opacity 0.5s ease;
+}
+
+.gallery-card:hover .gallery-card-img::before {
+  opacity: 1;
+}
+
+.gallery-card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 24px;
+  background: linear-gradient(to top, rgba(10,10,10,0.9), transparent);
+  color: #fff;
+  transform: translateY(10px);
+  transition: transform 0.4s ease;
+}
+
+.gallery-card:hover .gallery-card-overlay {
+  transform: translateY(0);
+}
+
+.gallery-card-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.gallery-card-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--primary-light);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Specific placeholder visuals (using themed Unsplash placeholders) */
+.card-placeholder-1::before { background-image: url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=800&auto=format&fit=crop'); }
+.card-placeholder-2::before { background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800&auto=format&fit=crop'); }
+.card-placeholder-3::before { background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop'); }
+.card-placeholder-4::before { background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop'); }
+
+/* ============================================================
+   SCROLL REVEAL (rest unchanged)
    ============================================================ */
 .reveal {
   opacity: 0;
@@ -1531,4 +1655,73 @@ textarea.form-control {
   .hero-title { font-size: 2.2rem; }
   .hero-actions { flex-direction: column; align-items: center; }
   .btn { width: 100%; justify-content: center; }
+}
+
+/* ============================================================
+   LEGAL / IMPRESSUM STYLES
+   ============================================================ */
+.legal-section .section-title span {
+  text-decoration: none;
+}
+
+.legal-block h2 {
+  font-weight: 800;
+  letter-spacing: -0.01e m;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 24px;
+  color: var(--primary-light);
+}
+
+.legal-block h2::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 32px;
+  height: 2px;
+  background: var(--grad-primary);
+  border-radius: 2px;
+}
+
+.legal-block p {
+  color: var(--secondary);
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+
+.legal-block a.purple {
+  color: var(--primary-light);
+  transition: all var(--transition);
+}
+
+.legal-block a.purple:hover {
+  color: #fff;
+  opacity: 0.8;
+}
+
+.legal-block strong {
+  color: var(--tertiary);
+  font-weight: 700;
+}
+
+.footer-legal-link {
+  font-size: 0.85rem;
+  color: var(--secondary);
+  transition: all var(--transition);
+}
+
+.footer-legal-link:hover {
+  color: #fff;
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .legal-section {
+    padding-top: 120px !important;
+  }
+  
+  .legal-section .glass-card {
+    padding: 24px !important;
+  }
 }
